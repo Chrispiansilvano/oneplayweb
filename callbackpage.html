@@ -1,54 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payment Redirect Page</title>
-</head>
-<body>
+  </head>
+  <body>
     <h1>Payment Status</h1>
     <p id="status"></p>
     <p id="transactionRefId"></p>
     <p id="errorCode"></p>
 
     <script>
-        // Get the full URL
-        const urlParams = new URLSearchParams(window.location.search);
+      // Get the full URL
+      const urlParams = new URLSearchParams(window.location.search);
 
-        // Extract the values from the URL
-        const transStatus = urlParams.get('trans_status');
-        const transactionRefId = urlParams.get('transaction_ref_id');
-        const errorCode = urlParams.get('error_code');
+      // Extract the values from the URL
+      const transStatus = urlParams.get("trans_status");
+      const transactionRefId = urlParams.get("transaction_ref_id");
+      const errorCode = urlParams.get("error_code");
 
-        // Display the values on the page
-        document.getElementById('status').textContent = `Transaction Status: ${transStatus}`;
-        document.getElementById('transactionRefId').textContent = `Transaction Reference ID: ${transactionRefId}`;
-        document.getElementById('errorCode').textContent = `Error Code: ${errorCode}`;
+      // Display the values on the page
+      document.getElementById(
+        "status"
+      ).textContent = `Transaction Status: ${transStatus}`;
+      document.getElementById(
+        "transactionRefId"
+      ).textContent = `Transaction Reference ID: ${transactionRefId}`;
+      document.getElementById(
+        "errorCode"
+      ).textContent = `Error Code: ${errorCode}`;
 
-        
-
-        // Example POST request with fetch
-        fetch('http://localhost:8080/api/tigoPayments/statuscallback', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                trans_status: transStatus,
-                transaction_ref_id: transactionRefId,
-                error_code: errorCode
-            })
+      // Send the data to the backend using an AJAX request
+      fetch("http://localhost:8080/tigoPayments/statuscallback", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          trans_status: transStatus,
+          transaction_ref_id: transactionRefId,
+          error_code: errorCode,
+        }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            throw new Error("Network response was not ok");
+          }
+          return response.json();
         })
-        .then(response => response.json())
-        .then(data => {
-            console.log('Success:', data);
+        .then((data) => {
+          console.log("Success:", data);
         })
         .catch((error) => {
-            console.error('Error:', error);
+          console.error("Error:", error);
         });
-
-
-
     </script>
-</body>
+  </body>
 </html>
