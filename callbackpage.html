@@ -25,7 +25,30 @@
         document.getElementById('transactionRefId').textContent = `Transaction Reference ID: ${transactionRefId}`;
         document.getElementById('errorCode').textContent = `Error Code: ${errorCode}`;
 
-        // Optionally, you can handle the parameters (e.g., save them to a database, etc.)
+        
+
+        // Example POST request with fetch
+        fetch('http://localhost:8080/api/tigoPayments/statuscallback', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                trans_status: transStatus,
+                transaction_ref_id: transactionRefId,
+                error_code: errorCode
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log('Success:', data);
+        })
+        .catch((error) => {
+            console.error('Error:', error);
+        });
+
+
+
     </script>
 </body>
 </html>
