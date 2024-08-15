@@ -4,12 +4,28 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Payment Redirect Page</title>
+    <link rel="stylesheet" href="css/main.css" />
   </head>
   <body>
-    <h1>Payment Status</h1>
-    <p id="status"></p>
-    <p id="transactionRefId"></p>
-    <p id="errorCode"></p>
+    <div class="flex justify-center flex-col">
+      <div class="text-3xl px-3 py-4 mt-20 flex justify-center">
+        <h1 class="py-6" >Payment Status</h1>
+      </div>
+  
+      <div class="text-lg font-bold text-white flex flex-col self-center py-8 px-6 bg-sky-400 w-auto rounded-lg h-60">
+        <div class="flex flex-row py-3">
+          <p class="px-2" id="status"></p>
+         <p id="statusValue"></p>
+        </div>
+        
+        <p class="py-3" id="transactionRefId"></p>
+        <p class="py-3" id="errorCode"></p>
+      </div>
+      <div class="text-2xl font-bold mt-10 text-sky-400 flex  self-center py-2 px-6 border-2 border-solid border-sky-400 w-auto rounded-lg h-18 ">
+        <button type="button" onclick="redirectToOneplay()" >Return to Oneplay</button>
+      </div>
+    </div>
+   
 
     <script>
       // Get the full URL
@@ -20,10 +36,27 @@
       const transactionRefId = urlParams.get("transaction_ref_id");
       const errorCode = urlParams.get("error_code");
 
+      if(transStatus == "fail"){
+        document.getElementById(
+        "statusValue"
+      ).style.color = 'red'
+      }else if(transStatus == "success"){
+        document.getElementById(
+        "statusValue"
+      ).style.color = 'green'
+      }else{
+        document.getElementById(
+        "statusValue"
+      ).style.color = 'white'
+      }
+
       // Display the values on the page
       document.getElementById(
         "status"
-      ).textContent = `Transaction Status: ${transStatus}`;
+      ).textContent = `Transaction Status:`;
+      document.getElementById(
+        "statusValue"
+      ).textContent =`${transStatus}`;
       document.getElementById(
         "transactionRefId"
       ).textContent = `Transaction Reference ID: ${transactionRefId}`;
@@ -55,6 +88,10 @@
         .catch((error) => {
           console.error("Error:", error);
         });
+
+      function redirectToOneplay(){
+        window.location.href = "oneplay://subscription";
+      }
     </script>
   </body>
 </html>
