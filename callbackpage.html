@@ -32,7 +32,7 @@
       ).textContent = `Error Code: ${errorCode}`;
 
       // Send the data to the backend using an AJAX request
-      fetch("http://localhost:8080/tigoPayments/statuscallback", {
+      fetch("http://localhost:8080/api/tigoPayments/statuscallback", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
