@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Redirect Page</title>
+</head>
+<body>
+    <h1>Payment Status</h1>
+    <p id="status"></p>
+    <p id="transactionRefId"></p>
+    <p id="errorCode"></p>
+
+    <script>
+        // Get the full URL
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Extract the values from the URL
+        const transStatus = urlParams.get('trans_status');
+        const transactionRefId = urlParams.get('transaction_ref_id');
+        const errorCode = urlParams.get('error_code');
+
+        // Display the values on the page
+        document.getElementById('status').textContent = `Transaction Status: ${transStatus}`;
+        document.getElementById('transactionRefId').textContent = `Transaction Reference ID: ${transactionRefId}`;
+        document.getElementById('errorCode').textContent = `Error Code: ${errorCode}`;
+
+        // Optionally, you can handle the parameters (e.g., save them to a database, etc.)
+    </script>
+</body>
+</html>
